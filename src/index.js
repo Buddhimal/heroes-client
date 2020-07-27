@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.css"
-import Hero from  "./components/Hero"
+import 'font-awesome/css/font-awesome.min.css';
 
-let firstElement= <h1> Hello World! </h1>
+import Hero from  "./components/Hero"
+import Heroes from  "./components/Heroes"
+
+// let firstElement= <h1> Hello World! </h1>
 
 // import './index.css';
 // import App from './App';
@@ -12,8 +15,7 @@ let firstElement= <h1> Hello World! </h1>
 
 
 
-ReactDOM.render(<Hero/>, document.getElementById('root')
-);
+ReactDOM.render(<Heroes/>, document.getElementById('root'));
 
 //
 // // If you want your app to work offline and load faster, you can change
