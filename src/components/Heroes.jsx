@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import axios from "axios";
 import Hero from "./Hero";
 
 class Heros extends Component {
@@ -16,8 +17,10 @@ class Heros extends Component {
                 <div className="row col-md-12">
                     <div className="row">
                         {this.state.allAvengers.map((avenger) => (
-                            <div className="col" key={avenger.id}>
-                                <Hero key={avenger.id} likeCount={avenger.likeCount}/>
+                            <div className="col-md-6" key={avenger.id}>
+                                <Hero key={avenger.id} avenger={avenger}
+                                onDelete={()=> this.deleteAvenger(avenger.id)}
+                                />
                             </div>
                         ))}
                     </div>
@@ -36,6 +39,38 @@ class Heros extends Component {
             </div>
         )
     }
+
+    async deleteAvenger(heroId) {
+        // let newAvengers=this.state.allAvengers.filter(
+        //     (avenger)
+        // )
+       await axios.delete(`http://localhost:5000/api/heroes/${heroId}`)
+    }
+
+    async likeAvenger(avenger){
+        await axios.put(`http://localhost:5000/api/heroes/${avenger.id}`,{
+            likeCount:avenger.likeCount+1
+        })
+    }
+
+    async componentDidMount() {
+        let {data} = await axios.get("http://localhost:5000/api/heroes");
+        console.log(data);
+
+        let avengers= data.map((avenger) => {
+            return {
+                id: avenger._id,
+                name: avenger.name,
+                likeCount:avenger.likeCount
+            };
+        });
+
+        this.setState({allAvengers: avengers});
+    }
+
+
+
 }
+
 
 export default Heros;
